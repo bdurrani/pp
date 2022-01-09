@@ -132,8 +132,12 @@ void print_ast(std::ostream &out, const cppast::cpp_file &file)
   // recursively visit file and all children
   cppast::visit(file, [&](const cppast::cpp_entity &e, cppast::visitor_info info)
                 {
-        if (e.kind() == cppast::cpp_entity_kind::file_t || cppast::is_templated(e)
-            || cppast::is_friended(e))
+        if (e.kind() == cppast::cpp_entity_kind::file_t 
+            || cppast::is_templated(e)
+            || cppast::is_friended(e)
+            // skip headers
+            || e.kind() == cppast::cpp_entity_kind::include_directive_t
+            )
             // no need to do anything for a file,
             // templated and friended entities are just proxies, so skip those as well
             // return true to continue visit for children
