@@ -130,7 +130,12 @@ void print_custom(std::ostream &out, const cppast::cpp_file &file)
                 { 
     if(cppast::is_definition(e))
     {
-      print_entity(out, e);
+      info.event == cppast::visitor_info::container_entity_enter ? out << "Enter " << std::endl : out << "Leave " << std::endl;
+      if(e.kind() == cppast::cpp_entity_kind::class_t)
+      {
+        print_entity(out, e);
+      }
+      
     } });
 }
 
